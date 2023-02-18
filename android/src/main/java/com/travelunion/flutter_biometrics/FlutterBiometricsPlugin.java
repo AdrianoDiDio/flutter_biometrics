@@ -181,9 +181,9 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
           if (authInProgress.compareAndSet(true, false)) {
             try {
               Cipher cipher = cryptoObject.getCipher();
-              byte[] decoded = Base64.decode((String) call.argument("ciphertext"), Base64.DEFAULT);
+              byte[] decoded = Base64.decode((String) call.argument("ciphertext"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
               byte[] plaintext = cipher.doFinal(decoded);
-              String plaintextString = Base64.encodeToString(plaintext, Base64.DEFAULT);
+              String plaintextString = Base64.encodeToString(plaintext, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
               result.success(plaintextString);
             } catch (Exception e) {
               result.error("decrypt_error", "Error decrypting ciphertext: " + e.getMessage(), null);
@@ -262,10 +262,10 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
               if (authInProgress.compareAndSet(true, false)) {
                 try {
                   Signature cryptoSignature = cryptoObject.getSignature();
-                  byte[] decoded = Base64.decode((String) call.argument("payload"), Base64.DEFAULT);
+                  byte[] decoded = Base64.decode((String) call.argument("payload"), Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
                   cryptoSignature.update(decoded);
                   byte[] signed = cryptoSignature.sign();
-                  String signedString = Base64.encodeToString(signed, Base64.DEFAULT);
+                  String signedString = Base64.encodeToString(signed, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
                   signedString = signedString.replaceAll("\r", "").replaceAll("\n", "");
                   result.success(signedString);
                 } catch (Exception e) {
