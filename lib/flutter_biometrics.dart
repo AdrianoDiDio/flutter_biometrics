@@ -122,6 +122,6 @@ class FlutterBiometrics {
   ///
   /// Returns true if deletion was successfull error otherwise.
   Future<dynamic> deleteKeys() async {
-    return await _channel.invokeMethod<dynamic>(MethodNames.decrypt);
+    return await _channel.invokeMethod<dynamic>(MethodNames.deleteKeys);
   }
 }
