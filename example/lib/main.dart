@@ -59,12 +59,15 @@ class _MyAppState extends State<MyApp> {
             Container(
               margin: EdgeInsets.only(top: 20.0),
               alignment: Alignment.center,
-              child: Text("1. Generate a key pair", style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),),
+              child: Text(
+                "1. Generate a key pair",
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               alignment: Alignment.center,
               margin: EdgeInsets.only(top: 20.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: createKeys,
                 child: Text("Create keys"),
               ),
@@ -83,7 +86,10 @@ class _MyAppState extends State<MyApp> {
             Container(
               margin: EdgeInsets.only(top: 20.0, bottom: 10.0),
               alignment: Alignment.center,
-              child: Text("2. Provide a payload to sign", style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),),
+              child: Text(
+                "2. Provide a payload to sign",
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: 20.0),
@@ -103,7 +109,7 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
             Center(
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: sign,
                 child: Text("Sign '$_payload'"),
               ),

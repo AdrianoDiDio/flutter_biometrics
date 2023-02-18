@@ -11,6 +11,8 @@ public class Constants {
         final static String availableBiometricTypes = "availableBiometricTypes";
         final static String createKeys = "createKeys";
         final static String sign = "sign";
+        final static String decrypt = "decrypt";
+        final static String deleteKeys = "deleteKeys";
     }
 
     final static class BiometricsType {
