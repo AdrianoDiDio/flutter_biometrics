@@ -90,7 +90,7 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
   @Override
   public void onMethodCall(MethodCall call, final Result result) {
     if (call.method.equals(Constants.MethodNames.createKeys)) {
-      createKeys(call, result);
+      createKeys(result);
     } else if (call.method.equals(Constants.MethodNames.sign)) {
       sign(call, result);
     } else if( call.method.equals(Constants.MethodNames.decrypt)) {
@@ -104,15 +104,15 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
     }
   }
 
-  protected void createKeys(MethodCall call, final Result result) {
+  protected void createKeys(final Result result) {
     try {
       KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
       keyStore.load(null);
       if (!keyStore.containsAlias(KEY_ALIAS)) {
-
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA,
+        keyStore.deleteEntry(KEY_ALIAS);
+      }
+      KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA,
                 KEYSTORE);
-
         keyPairGenerator.initialize(new KeyGenParameterSpec.Builder(KEY_ALIAS,
                 KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT |
                         KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY).
@@ -120,19 +120,13 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
                 .setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1)
                 .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA384,
                         KeyProperties.DIGEST_SHA512).setUserAuthenticationRequired(true).build());
-
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
         result.success(getEncodedPublicKey(keyPair.getPublic()));
-      } else {
-
-        result.success(getEncodedPublicKey(keyStore.getCertificate(KEY_ALIAS).getPublicKey()));
-      }
     } catch (Exception e) {
-      result.error("create_keys_error", "Error generating public private keys: " + e.getMessage(), null);
+      result.error("create_keys_error", "Error generating KeyPair: " + e.getMessage(), null);
     }
   }
-
+  
   protected void decrypt(final MethodCall call, final Result result) {
     if (!authInProgress.compareAndSet(false, true)) {
       result.error("auth_in_progress", "Authentication in progress", null);
@@ -337,7 +331,6 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
     try {
       KeyStore keyStore = KeyStore.getInstance(KEYSTORE);
       keyStore.load(null);
-
       keyStore.deleteEntry(KEY_ALIAS);
       result.success(true);
     } catch (Exception e) {

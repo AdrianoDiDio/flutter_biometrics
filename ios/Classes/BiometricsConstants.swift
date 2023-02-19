@@ -5,6 +5,9 @@ struct BiometricsConstants {
         static let availableBiometricTypes = "availableBiometricTypes"
         static let createKeys = "createKeys"
         static let sign = "sign"
+        static let decrypt = "decrypt"
+        static let deleteKeys = "deleteKeys"
+
     }
     
     struct BiometricsType {

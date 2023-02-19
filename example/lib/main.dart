@@ -22,9 +22,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> createKeys() async {
     var biometrics = FlutterBiometrics();
-    String publicKey = await biometrics.createKeys(
-        reason: 'Please authenticate to create public/private key pair');
-
+    String publicKey = await biometrics.createKeys();
     setState(() {
       _publicKey = publicKey;
     });

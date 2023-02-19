@@ -22,25 +22,8 @@ class FlutterBiometrics {
   /// Will create a new keypair only if it doesn't already exists in the KeyStore
   ///
   /// Returns Base-64 encoded public key as a [String] if successful
-  ///
-  /// [reason] is the message to show when user will be prompted to authenticate using biometrics
-  ///
-  /// [showIOSErrorDialog] is used on iOS side to decide if error dialog should be displayed
-  ///
-  /// Provide [dialogMessages] if you want to customize messages for the auth dialog
-  Future<dynamic> createKeys({
-    required String reason,
-    showIOSErrorDialog = true,
-    DialogMessages dialogMessages = const DialogMessages(),
-  }) async {
-    final Map<String, Object> args = <String, Object>{
-      'reason': reason,
-      'useErrorDialogs': showIOSErrorDialog,
-    };
-
-    args.addAll(dialogMessages.messages);
-
-    return await _channel.invokeMethod<dynamic>(MethodNames.createKeys, args);
+  Future<dynamic> createKeys() async {
+    return await _channel.invokeMethod<dynamic>(MethodNames.createKeys);
   }
 
   /// Decrypt [ciphertext] using generated private key. [createKeys()] should be called once before using this method.

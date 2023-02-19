@@ -28,12 +28,17 @@ List<BiometricType> getAvailableBiometricTypes =
 
 ```dart
 String publicKeyAsBase64 =
-    await FlutterBiometrics().createKeys(reason: 'Please authenticate to generate keys');
+    await FlutterBiometrics().createKeys();
 ```
 
 ```dart
 bool signedPayloadAsBase64 =
     await FlutterBiometrics().sign(payload: 'base64string', reason: 'Please authenticate to sign payload');
+```
+
+```dart
+bool plaintextAsBase64 =
+    await FlutterBiometrics().decrypt(ciphertext: 'base64string', reason: 'Please authenticate to decrypt ciphertext');
 ```
 
 ## Android Integration (taken from [local_auth](https://github.com/flutter/plugins/tree/master/packages/local_auth))
