@@ -108,7 +108,7 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
     try {
       KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
       keyStore.load(null);
-      if (!keyStore.containsAlias(KEY_ALIAS)) {
+      if (keyStore.containsAlias(KEY_ALIAS)) {
         keyStore.deleteEntry(KEY_ALIAS);
       }
       KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA,
