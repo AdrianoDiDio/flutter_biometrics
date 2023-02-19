@@ -323,7 +323,7 @@ public class FlutterBiometricsPlugin implements MethodCallHandler, FlutterPlugin
 
   protected String getEncodedPublicKey(PublicKey publicKey) {
     byte[] encodedPublicKey = publicKey.getEncoded();
-    String publicKeyString = Base64.encodeToString(encodedPublicKey, Base64.DEFAULT);
+    String publicKeyString = Base64.encodeToString(encodedPublicKey, Base64.DEFAULT | Base64.URL_SAFE | Base64.NO_WRAP);
     return publicKeyString.replaceAll("\r", "").replaceAll("\n", "");
   }
 
